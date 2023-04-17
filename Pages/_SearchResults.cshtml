@@ -1,0 +1,40 @@
+@using MovieDb.Models;
+
+<div class="container">
+    <h1 class="text-warning"> Search results for: @Model.title </h1>
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var movie in Model.searchList)
+            {
+                <div class="col col-lg-3 mb-4">
+                    <div class="card bg-dark h-100">
+                        <a asp-page="/MovieDetail" asp-route-id=@movie.id>
+                            <img class="card-img-top img-fluid" src=@movie.poster_path alt="Card image cap">
+                        </a>
+                        <div class="card-body">
+                            <div class="circle bg-gray">
+                                <text class=" fs-5 text-warning">@movie.vote_average.ToString("0.0")</text>
+                            </div>
+                            <h5 class="card-title text-light">@movie.title</h5>
+                            <p class="card-text text-light">
+                                @{
+                                    for (int i = 0; i < movie.genre_ids.Length; i++)
+                                    {
+                                        int id = movie.genre_ids[i];
+                                        if (i == movie.genre_ids.Length - 1)
+                                        {
+                                            @($"{Model.genreDict[id]}")
+                                        }
+                                        else
+                                        {
+                                            @($"{Model.genreDict[id]}, ")
+                                        }
+                                    }
+                                }</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

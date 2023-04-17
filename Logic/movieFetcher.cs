@@ -8,6 +8,8 @@ public interface IMovieFetcher
     Task<List<CastThumb>> fetchCast(int movie_id);
     Task<Movie> fetchMovieDetails(int movie_id);
     Task<List<ImageModel>> fetchImages(int movie_id);
+
+    Task<List<MoviesThumb>> searchMovie(String query);
 }
 
 public class MovieFetcher : IMovieFetcher
@@ -57,6 +59,20 @@ public class MovieFetcher : IMovieFetcher
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 return JObject.Parse(apiResponse)["backdrops"].ToObject<List<ImageModel>>();
+            }
+        }
+    }
+
+    public async Task<List<MoviesThumb>> searchMovie(String query)
+    {
+        var api_key = _configuration.GetValue("API_KEY", "");
+        string url = $"https://api.themoviedb.org/3/search/movie?api_key={api_key}&language=en-US&query={query}&page=1&include_adult=false";
+        using (var httpClient = new HttpClient())
+        {
+            using (var response = await httpClient.GetAsync(url))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                return JObject.Parse(apiResponse)["results"].ToObject<List<MoviesThumb>>();
             }
         }
     }

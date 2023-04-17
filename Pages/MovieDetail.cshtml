@@ -16,7 +16,7 @@
 </style>
 }
 
-<div class="container">
+<div id="MainContainer" class="container">
     <div class="movie">
         <img class="movie_img" src=@Model.movie.poster_path alt=@Model.movie.original_title />
         <div class="movie_info d-flex flex-column justify-content-between p-3 align-items-start">
@@ -33,7 +33,7 @@
                 @{
                     foreach (var genre in @Model.movie.genres)
                     {
-                        <span class="badge movie_badge">
+                        <span class="badge movie_badge" style="font-size: large;">
                             @genre.name
                         </span>
                     }

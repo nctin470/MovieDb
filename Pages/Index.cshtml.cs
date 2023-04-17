@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MovieDb.Models;
 using Newtonsoft.Json.Linq;
 using MovieDb.logic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MovieDb.Pages;
-
+[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
@@ -28,7 +29,6 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync(int? pageIndex)
     {
-
         if (pageIndex != null)
         {
             CurrentPage = (int)pageIndex;
